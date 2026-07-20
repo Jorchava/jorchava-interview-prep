@@ -1,0 +1,84 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // IMPORTANT: This is the OPENCODE config schema, NOT the generic
+  // "mcpServers" schema used by Claude Code/Desktop/Cursor.
+  //
+  // Opencode uses:
+  //   - top-level key "mcp" (not "mcpServers")
+  //   - "command" as a single ARRAY (not separate command + args)
+  //   - Verified against https://opencode.ai/docs/mcp-servers (fetched 2026-07-08)
+  //
+  // If you also use Claude Code/Desktop for other work, that tool reads a
+  // DIFFERENT config file with a DIFFERENT schema ("mcpServers" + separate
+  // command/args). Do not reuse this exact file for both — check each
+  // tool's own docs. See notes below for where each file should live.
+  // ─────────────────────────────────────────────────────────────────────────
+
+  "mcp": {
+
+    // ── Firefox DevTools MCP ──────────────────────────────────────────────
+    // Repo: https://github.com/mozilla/firefox-devtools-mcp
+    // Verified flags (fetched from README 2026-07-08):
+    //   --firefox-path, --profile-path, --headless, --viewport,
+    //   --start-url, --enable-script, --enable-privileged-context, etc.
+    //
+    // SECURITY NOTE FROM MOZILLA'S OWN DOCS:
+    // "Use a dedicated Firefox profile. Never run against your regular
+    //  profile. Avoid enabling extra flags unless needed — --enable-script
+    //  and --enable-privileged-context significantly expand what the agent
+    //  can do."
+    //
+    // --enable-privileged-context is OMITTED here on purpose: it grants
+    // access to browser internals (prefs, extension list, chrome context)
+    // that this project's testing needs (console/network/screenshot
+    // inspection) do not require. Adding it "just in case" is exactly the
+    // kind of unnecessary scope-expansion the anti-overengineering rule
+    // in AGENTS.md exists to catch.
+    //
+    // --enable-script IS commented in below because it is the one thing
+    // that would let the agent run the Pinia state-inspection snippet
+    // (document.querySelector('#app')?.__vue_app__?...) automatically
+    // instead of you pasting it manually. Uncomment only if you want that.
+    "firefox-devtools": {
+      "type": "local",
+      "command": [
+        "npx", "-y", "@mozilla/firefox-devtools-mcp@latest",
+        "--firefox-path", "C:\\Program Files\\Firefox Developer Edition\\firefox.exe",
+        "--profile-path", "C:\\Users\\<YOUR_USERNAME>\\.testing-profiles\\game-testing",
+        "--headless"
+        // , "--enable-script"   // uncomment to allow evaluate_script (arbitrary JS in page)
+      ],
+      "enabled": true
+    },
+
+    // ── Context7 — up-to-date library docs (PixiJS v8, Vue 3, etc.) ───────
+    // Verified against https://opencode.ai/docs/mcp-servers and
+    // https://context7.com/docs/resources/all-clients (fetched 2026-07-08)
+    //
+    // No API key required for basic use — Context7 works anonymously with
+    // lower rate limits. The {env:CONTEXT7_API_KEY} syntax below means:
+    // "read this value from an environment variable at runtime" — the
+    // actual key is NEVER written into this file, so this file is safe
+    // to commit even with the key line present. Set the real value in
+    // a gitignored .env (see .env.example) or your shell environment.
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp"
+      // Uncomment once you have a free Context7 API key and have set
+      // CONTEXT7_API_KEY in your environment (higher rate limits only —
+      // not required for normal solo use):
+      //
+      // , "headers": { "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}" }
+    }
+
+    // ── Removed: "threejs-devtools-mcp" ────────────────────────────────────
+    // Not verified as a real/trustworthy published package, and not needed
+    // for this project (no Three.js in the stack). Adding an unverified
+    // npm package name to an `npx` command is a real supply-chain risk —
+    // the same category of risk the pnpm build-script approval system
+    // (see pnpm-workspace.yaml) exists to guard against. Add it back only
+    // after confirming the exact package name from an official source.
+  }
+}

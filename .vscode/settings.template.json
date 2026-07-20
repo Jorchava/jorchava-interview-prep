@@ -1,0 +1,42 @@
+{
+  // ─────────────────────────────────────────────────────────────────────────
+  // Only the settings that are LOAD-BEARING for the AGENTS.md code standards
+  // to actually hold. Merge into your personal global settings.json rather
+  // than replacing it — this file intentionally omits personal preferences
+  // (font size, extensions, terminal profile, etc.) since those don't
+  // affect whether the codebase stays consistent with governance rules.
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // The one setting that actually matters for this system: without
+  // "always" here, the editor's own formatter (Volar, Prettier, whatever)
+  // runs on save but ESLint's fixes do NOT run automatically afterward —
+  // meaning rules like vue/block-order or max-attributes-per-line get
+  // re-broken by the formatter every single save, and only show up as
+  // lint warnings you have to fix by hand. This was an actual recurring
+  // friction point before this setting was corrected.
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+
+  "eslint.useFlatConfig": true,
+  "eslint.probe": ["javascript", "typescript", "vue"],
+
+  "editor.formatOnSave": true,
+
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "js/ts.preferences.quoteStyle": "single",
+  "prettier.singleQuote": true
+}

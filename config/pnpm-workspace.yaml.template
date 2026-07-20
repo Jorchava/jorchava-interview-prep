@@ -1,0 +1,45 @@
+# pnpm-workspace.yaml
+#
+# HOW THIS FILE SHOULD ACTUALLY BE MAINTAINED — read before editing manually.
+#
+# pnpm v11 removed onlyBuiltDependencies / ignoredBuiltDependencies /
+# neverBuiltDependencies entirely and replaced them all with a single
+# `allowBuilds` map (package name -> true/false). Verified against
+# https://pnpm.io/settings and https://pnpm.io/blog/releases/11.0
+# (fetched 2026-07-08).
+#
+# strictDepBuilds defaults to TRUE in v11. This means: any dependency with
+# a lifecycle script (preinstall/install/postinstall) that is NOT explicitly
+# listed here causes a hard ERROR (not a warning) during `pnpm install`.
+# This is exactly what was failing in CI.
+#
+# DO NOT hand-write this list from memory or copy someone else's list —
+# the correct set of packages depends on your exact dependency tree and
+# will drift as dependencies update. Instead, regenerate it with pnpm
+# itself whenever you see "Ignored build scripts" or an
+# ERR_PNPM_IGNORED_BUILDS error:
+#
+#   1. Run `pnpm install` locally.
+#      pnpm automatically adds any newly-ignored packages to this file
+#      with a placeholder value of `false`.
+#   2. Run `pnpm approve-builds` (interactive prompt) and review each
+#      package. Approve ones you recognize and trust (build tools like
+#      esbuild, native binding compilers like @parcel/watcher, sass-embedded,
+#      sharp, etc. are common and expected in a Vite/Vue/Vitest toolchain).
+#      Deny anything you don't recognize — investigate it first.
+#   3. Commit the resulting file. CI's `pnpm install --frozen-lockfile`
+#      will then succeed non-interactively because every needed script
+#      is already explicitly approved.
+#
+# Re-run this process whenever CI fails with an ignored-builds error after
+# a dependency update — don't just add the new package name manually and
+# guess; run `pnpm approve-builds` so pnpm confirms what's actually needed.
+
+allowBuilds:
+  # Example only — replace with YOUR project's actual output from
+  # `pnpm approve-builds`. Common ones for a Vite + Vue + Vitest +
+  # sass-embedded stack tend to include esbuild and any native-binding
+  # packages your dependencies pull in (e.g. @parcel/watcher via Vite's
+  # file watcher, sass-embedded's compiled binary). Do not assume this
+  # list is complete or correct for your project — verify with step 2 above.
+  '@parcel/watcher': true

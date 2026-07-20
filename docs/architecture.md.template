@@ -1,0 +1,134 @@
+# Architecture: [Project Name]
+
+> Single source of truth for all agents and contributors. Update this when
+> architectural decisions change — never let code and documentation drift
+> apart. This file is meant to stay public in the repo; it is usually the
+> single most valuable document for a reviewer trying to understand the
+> project quickly.
+
+---
+
+## 1. Project Overview
+
+[Expand on `docs/product-brief.md`'s one-line pitch with the technical
+framing — what it is, built how, for what showcased purpose.]
+
+---
+
+## 2. Goals
+
+[Pull from `docs/product-brief.md`'s "What This Demonstrates," phrased as
+concrete engineering goals.]
+
+---
+
+## 3. Non-Goals
+
+[Mirror `docs/product-brief.md`'s Non-Goals, plus any additional technical
+non-goals that emerged during architecture design specifically.]
+
+---
+
+## 4. Specification
+
+[Domain-specific detail: what the thing actually does, its rules, its
+data model. This section varies the most between projects — a game needs
+game rules and payout tables; a data tool needs its transformation rules;
+a content site needs its content model. Be concrete and complete here —
+this is what an agent implements against without needing to ask.]
+
+---
+
+## 5. Technical Architecture
+
+### 5.1 Layer Model
+
+[Describe the layers and what each one owns. Default recommendation
+(deviate with reasoning if the project genuinely doesn't fit this): keep
+business logic (rules, calculations, state transitions) in a layer with
+zero framework imports, so it's testable without any UI/rendering
+dependency. Rendering/UI reads from state, never computes business logic
+directly.]
+
+```
+[Draw the layer diagram — text boxes are fine]
+```
+
+**Critical rule:** [name the specific directory or module that must have
+zero framework imports, and how to verify it — e.g. `grep -r "from '<framework>'" src/logic/`]
+
+### 5.2 Directory Structure
+
+```
+[project-name]/
+├── docs/
+│   ├── product-brief.md
+│   ├── architecture.md          ← this file
+│   ├── <stack>-patterns.md      ← verified library patterns (if applicable)
+│   └── deployment-notes.md
+├── src/
+│   ├── [logic layer]/           ← zero framework imports
+│   ├── [state layer]/
+│   ├── [rendering/UI layer]/
+│   └── [types]/
+├── tests/
+├── AGENTS.md
+├── SKILLS.md
+└── PROJECT_CONTEXT.md
+```
+
+---
+
+## 6. State Machine
+
+> Include this section only if the project has meaningful state-transition
+> complexity worth documenting explicitly. Delete otherwise.
+
+### 6.1 States
+[Table: state | description | what's allowed in this state]
+
+### 6.2 Transitions
+[Explicit transition list — from state, trigger condition, to state.]
+
+---
+
+## 7. Service Interfaces
+
+> Include this section for any external dependency (backend, third-party
+> API) that should be swappable. See `docs/deployment-notes.md` for how
+> this connects to graceful degradation on a static-only deployment.
+
+```typescript
+// Define the interface here — a concrete implementation for local/demo
+// use, and the seam where a production implementation would plug in
+// without touching any other code.
+interface [ServiceName] {
+  [method](...): Promise<...>
+}
+```
+
+---
+
+## 8. Testing Strategy
+
+| Layer | Approach | Coverage target |
+|-------|----------|-----------------|
+| [Business logic] | TDD | Near 100% |
+| [State management] | TDD | High |
+| [Rendering/UI] | Spec-driven + manual verification | N/A — see Manual Verification Script in session prompts |
+
+---
+
+## 9. Performance Targets
+
+| Metric | Target |
+|--------|--------|
+| [Fill in concrete, measurable targets] | |
+
+---
+
+## 10. Assets and Credits
+
+> If the project uses third-party assets (sprites, audio, fonts), list
+> sources and licenses here, and confirm credit is given per the source's
+> license terms.

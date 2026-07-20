@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
+
+# Assumes package.json scripts named: lint, tsc (or typecheck), vitest:run
+# (or test:run), build — rename the run commands below to match your
+# project's actual scripts if they differ. Assumes pnpm via Corepack
+# (packageManager field in package.json) — swap the install steps for npm/
+# yarn equivalents if not using pnpm.
+
+jobs:
+  ci:
+    name: Lint · Type Check · Tests · Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type check
+        run: pnpm tsc --noEmit
+
+      - name: Tests
+        run: pnpm vitest run
+
+      - name: Build
+        run: pnpm build

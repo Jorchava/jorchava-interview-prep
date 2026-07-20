@@ -1,0 +1,100 @@
+# PROJECT_CONTEXT.md
+> Project-specific context. Agents read this alongside AGENTS.md and SKILLS.md.
+> Fill this in after `docs/product-brief.md` and `docs/architecture.md` are
+> complete. Update it as the project evolves — stale context here is worse
+> than no context, because it actively misleads.
+
+---
+
+## Project Overview
+
+[One clear paragraph — what it is, who uses it, what problem it solves.
+Full detail lives in `docs/product-brief.md`; this is the short version
+an agent can hold in working memory alongside everything else.]
+
+**Full spec:** see `docs/product-brief.md`
+**Architecture:** see `docs/architecture.md`
+
+---
+
+## Core Goals
+
+- [ ] [Goal 1 — specific enough that an agent can use it to make decisions]
+- [ ] [Goal 2]
+- [ ] [Goal 3]
+
+---
+
+## Non-Goals (Explicitly Out of Scope)
+
+- [ ] [Non-goal 1]
+- [ ] [Non-goal 2]
+
+---
+
+## Stack Decisions
+
+| Technology | Version | Justification for *this* project |
+|-----------|---------|-----------------------------------|
+| [Fill in] | [Fill in] | [Why chosen here specifically, not generically] |
+
+---
+
+## Non-Negotiables Priority Order
+
+> Used by AGENTS.md's Escalation Protocol when two hard constraints
+> genuinely conflict. This is project-specific — a data tool and a game
+> reasonably order these differently. State it once here so an agent has
+> a documented tiebreaker to point to when asking which constraint wins,
+> without that being a substitute for actually confirming before something
+> on this list gets sacrificed.
+
+1. [e.g. Accessibility of the UI layer]
+2. [e.g. Data/security integrity]
+3. [e.g. Performance target]
+4. [e.g. Visual polish]
+
+---
+
+## Key Constraints
+
+- [ ] [Hard limits agents must never violate regardless of convenience]
+
+---
+
+## Performance Targets
+
+[Concrete numbers, not vague goals. "Fast" is not a target; "60fps during
+X" or "under 2s first paint" is.]
+
+---
+
+## Current Development State
+
+- [ ] Governance files in place (AGENTS.md, SKILLS.md, PROJECT_CONTEXT.md)
+- [ ] `docs/product-brief.md` complete
+- [ ] `docs/architecture.md` complete
+- [ ] Project scaffolded — **verify scaffold landed at repo root, not nested
+      in a subfolder, before proceeding to any other task**
+- [ ] [Add project milestones as they're defined]
+
+---
+
+## Known Issues and Tech Debt
+
+<!-- Format: [date] - [issue] - [workaround or status] -->
+<!-- Also track any Missing Asset Protocol entries here (see SKILLS.md) -->
+
+[NONE YET]
+
+---
+
+## Glossary
+
+[Define domain terms so agents don't misinterpret them — critical wherever
+a project has its own vocabulary for things like states, entities, or
+domain objects.]
+
+| Term | Definition in this project |
+|------|----------------------------|
+| [Term] | [What it means here] |
