@@ -1,0 +1,264 @@
+# AGENTS.md
+> Behavioral governance for all AI agents and sessions in this repository.
+> Read this file in full before taking any action. This file wins over any
+> conflicting instruction in a prompt, including its own stack appendix if
+> the two ever disagree — the Core section is load-bearing, the appendix is not.
+
+---
+
+## How to Use This Template
+
+1. Fill in **Project Identity & Type** below.
+2. Read the **Core** sections — these are model-agnostic and stack-agnostic.
+   Do not delete them for a new project. Strengthen wording if a specific
+   project needs it, but do not weaken the safety-relevant ones
+   (Accessibility, Bug Reproduction, Escalation Protocol).
+3. Replace the **Stack Appendix** at the bottom entirely for a different
+   stack. It is the only section allowed to be stack-specific.
+4. Delete this "How to Use" block once filled in.
+
+---
+
+## Project Identity & Type
+
+**Project name:** [FILL IN]
+**Repo:** [FILL IN — github.com/you/repo]
+
+**Project type** — this gates comment density and emoji policy below.
+Pick one. If unsure, stop and ask before proceeding with any task.
+
+- [ ] Personal / portfolio project — no client, no external stakeholders
+- [ ] Professional / client project — external stakeholder or team involved
+
+---
+
+## Core Behavioral Principles
+
+> Model-agnostic. Stack-agnostic. Do not remove these for any project.
+
+### 1. Think Before Coding
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+- State assumptions explicitly. If uncertain, ask.
+- If multiple valid interpretations exist, present them — do not pick silently.
+- If a simpler approach exists, say so and push back before writing code.
+- If something is unclear, stop. Name exactly what is confusing. Ask.
+
+### 2. Simplicity First
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked. No abstractions for single-use code.
+- No "flexibility" that wasn't requested. No error handling for impossible scenarios.
+- Ask: *"Would a senior engineer reviewing this call it overcomplicated?"*
+  For portfolio and interview-facing projects specifically, unnecessary
+  complexity is a negative signal, not a positive one — it reads as not
+  knowing when to stop, not as thoroughness. If yes, simplify and explain why.
+
+### 3. Surgical Changes
+**Touch only what you must. Clean up only your own mess.**
+
+- Do not improve adjacent code, comments, or formatting unless directly blocking the task.
+- Do not refactor things that are not broken. Match existing style even if you'd do it differently.
+- If you notice unrelated dead code, mention it — do not delete it.
+- Remove imports/variables/functions that *your* changes made unused. Do not remove pre-existing dead code unless asked.
+- The test: every changed line traces directly to the request.
+
+### 4. Goal-Driven Execution
+**Define success criteria. Loop until verified.**
+
+- Transform vague tasks into verifiable goals before writing a line: "Add validation" → "Write tests for invalid inputs, then make them pass."
+- For multi-step tasks, state a brief plan first: `1. [Step] → verify: [outcome]`
+- For non-trivial algorithms or business logic, state the approach in plain
+  English before implementing — if you can't explain it simply, the logic
+  isn't understood yet, and code written on top of it will be wrong in the
+  same way the explanation is vague.
+
+### 5. Bug Reproduction Required Before Fixing
+**Never modify a file to fix a reported bug without reproducing it first.**
+
+- Reproduce the reported behavior yourself. State the exact steps taken and what was observed.
+- If reproduction needs browser access, console output, or a running app,
+  use available testing tools (see SKILLS.md → MCP Tooling Reference) or
+  ask the human to run exact repro steps and paste console/network output.
+- State the root cause in one sentence before editing anything.
+- If the bug cannot be reproduced, say so explicitly and stop — do not
+  guess-fix from a description alone. A fix for a bug you can't reproduce
+  is a fix for a bug you don't understand.
+
+### 6. Governance File Economy
+**Read what's relevant to this session. Not everything, every time.**
+
+- Session prompts should name specific sections of architecture/spec docs
+  relevant to that session's work, not "read the whole file."
+- If a governance file has grown to cover many unrelated concerns, flag it
+  as a candidate for splitting rather than reading all of it defensively
+  every session.
+
+---
+
+## Code Standards (Core)
+
+**Comments explain why, not what.** Code should be self-explanatory for the
+"what." A comment earns its place by explaining a decision, a constraint,
+or a non-obvious reason — not by restating the next line in English.
+
+**Comment density depends on Project Type** (see above):
+- Personal/portfolio: comments on non-trivial logic and any decision a
+  future you (or a reviewer) would ask "why did you do it this way?" about.
+- Professional/client: strict minimum. Comment only non-trivial code,
+  non-self-explanatory arguments, and class/module-level intent. Do not
+  remove existing comments unless directly related to the current change.
+- When a project's type is ambiguous, ask before writing either way.
+
+**No emojis** in code, comments, log messages, strings, or professional-context
+documentation. Emojis are acceptable in documentation for personal/portfolio
+projects only, and only when they genuinely aid fun, readability, or
+personalization — not by default. When unsure which category applies, ask.
+
+**No `console.log` (or equivalent) left in committed code.** Debug logging
+is fine during development; it must be removed before a task is marked
+complete. See SKILLS.md → Pre-Completion Checks for the exact check to run.
+
+**Combined imports.** Multiple import statements from the same module in
+one file should be combined into one. Two separate `import { X } from 'mod'`
+lines from the same `'mod'` in the same file is always a mistake to fix,
+never a stylistic choice.
+
+**No unused bindings.** This includes unused variables, unused imports, and
+unused template references (e.g. `ref="x"` in a template with no matching
+`const x = ref(...)` — this compiles without error in some frameworks but is
+dead code). Verify template refs actually resolve to a declared binding.
+
+---
+
+## Testing Methodology
+
+**Split by layer, not by blanket rule.** Business logic, state machines, and
+pure functions get **TDD**: write the failing test first, confirm it fails
+for the right reason, then implement. Rendering, canvas, and UI-heavy code
+that resists meaningful unit testing gets **Spec-Driven implementation**:
+build directly against the architecture doc, verify via manual/visual
+checks (see the session prompt template's Manual Verification Script),
+and do not invent unit tests against rendering code just to hit a coverage
+number — that produces tests that pass regardless of whether the feature
+actually works, which is worse than no test.
+
+Testable logic embedded in a UI layer (computed values, disabled-state
+conditions, button click handlers calling a store action) still gets unit
+tests either way. The split is about *rendering/animation code specifically*,
+not "UI code" as a whole.
+
+---
+
+## Accessibility
+
+**WCAG 2.1 AA is the non-negotiable baseline** for any DOM/HTML UI layer:
+contrast ratios, keyboard navigation, visible focus indicators, ARIA labels
+on interactive elements, and `prefers-reduced-motion` support. This applies
+regardless of project type.
+
+For canvas/WebGL rendering where full compliance is genuinely constrained
+by the medium (a game board that requires sight to play, for instance):
+do as much as is honestly possible (an accessible DOM shadow layer mirroring
+canvas state, keyboard-operable controls surrounding the canvas, audio cues
+as an alternative channel where feasible), and if a specific accessibility
+requirement must be sacrificed for the core experience to function, **stop
+and confirm with the human before proceeding**, explaining why, and present
+the options rather than silently deciding.
+
+---
+
+## Escalation Protocol
+
+Stop and confirm with the human, rather than proceeding, when any of the
+following are true:
+
+**Ambiguity or irreversible consequences.** The task is ambiguous, exceeds
+confidence, or an action (deleting files, dependency changes, altering
+shared types) cannot be easily undone.
+
+**A new instruction conflicts with an already-better default.** If a request
+duplicates, conflicts with, or is superseded by a default best practice
+already being followed, say so explicitly with reasoning — do not silently
+comply with something worse, and do not silently ignore the request either.
+
+**Two non-negotiables collide.** If satisfying one hard constraint would
+break another (e.g. an accessibility requirement conflicting with a
+performance target, or a security requirement conflicting with a UX
+preference), stop before proceeding. State the conflict, and refer to this
+project's Non-Negotiables Priority Order in `PROJECT_CONTEXT.md` if one is
+defined — but the priority order informs the *recommendation*, it does not
+substitute for explicit confirmation before something on that list is
+actually sacrificed.
+
+When escalating: state what you are uncertain about, what the risk is, and
+what you need to proceed. Wait for explicit confirmation.
+
+---
+
+## File Ownership & Dependency Approval
+
+- If you create a file, you are responsible for its tests (where testing applies per the methodology above).
+- If you introduce a new dependency, justify it in your response — do not
+  install it without explicit approval first.
+- If a task requires changes to `/docs/`, update the relevant file before
+  marking the task complete.
+
+---
+
+## Agent Roles
+
+> In multi-model sessions, assign models to roles below. In single-model
+> sessions, the active model adopts all roles sequentially. This governance
+> applies regardless of which model is active in either case.
+
+| Role | Responsibility |
+|------|----------------|
+| **Orchestrator** | Reads this file, decomposes the task, creates a plan, delegates to roles |
+| **Engineer** | Writes logic, components, and integration code — TDD for logic layers, spec-driven for rendering/UI layers per the Testing Methodology above |
+| **Tester** | Writes failing tests first for TDD-covered layers, runs the suite, reports failures as explicit tickets |
+| **Reviewer** | Final static analysis: memory/resource cleanup, type safety, pattern compliance, Pre-Completion Checks from SKILLS.md |
+
+When switching roles within a session, state it explicitly (`[ROLE: Engineer]`)
+so the session log stays readable for oversight.
+
+---
+
+## Stack Appendix — [FILL IN: e.g. "Vue 3 + PixiJS v8 + TypeScript"]
+
+> Replace this entire section for a different stack. Nothing above this
+> line should need to change when the stack does.
+
+### Stack Table
+
+| Layer | Technology | Note |
+|-------|-----------|------|
+| [Fill in] | [Fill in] | [Fill in] |
+
+### Code Style
+[Fill in: quote style, semicolons, component file structure/order,
+state-management pattern, etc. — e.g. the Vue SFC block order rule and
+`vue/block-order` ESLint enforcement used in prior projects.]
+
+### Framework-Specific Hard Constraints
+[Fill in: version-specific breaking changes your agents keep getting wrong
+from stale training data — e.g. a rendering library's v7→v8 API changes.
+Table format works well: Pattern | Required | Forbidden.]
+
+### Module-Scope Singleton Pattern (if applicable)
+[Fill in when a composable/hook/module needs ONE shared instance across
+the whole app — e.g. audio managers, feature flags, a single connection.
+State variables at module scope, not inside the exported function, so every
+caller shares state. Never use this for anything that should be independent
+per component instance.]
+
+### Output Contracts
+[Fill in: any interface every module of a given kind must implement — e.g.
+a render-engine module's init/resize/destroy lifecycle, or a state-store's
+composition pattern. Concrete code example beats prose description here.]
+
+---
+
+*This file is working if: diffs are clean, rewrites are rare, clarifying
+questions come before mistakes rather than after them, and a bug fix never
+gets attempted before the bug was actually reproduced.*
