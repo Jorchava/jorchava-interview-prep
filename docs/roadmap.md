@@ -51,11 +51,11 @@ test of whether the six-part format actually reads as senior.
 
 ## Module 2 — HTML Mastery (Sessions 9-14)
 
-- [ ] **Session 9** — Semantic HTML → accessibility/SEO implications
-- [ ] **Session 10** — Forms → validation patterns → accessible forms
-- [ ] **Session 11** — Tables → ARIA basics in HTML context
-- [ ] **Session 12** — Browser parsing → DOM construction
-- [ ] **Session 13** — Shadow DOM → web components → encapsulation
+- [x] **Session 9** — Semantic HTML → accessibility/SEO implications
+- [x] **Session 10** — Forms → validation patterns → accessible forms
+- [x] **Session 11** — Tables → ARIA basics in HTML context
+- [x] **Session 12** — Browser parsing → DOM construction
+- [x] **Session 13** — Shadow DOM → web components → encapsulation
 - [ ] **Session 14** — Events → event delegation → bubbling/capturing
 
 ## Module 3 — CSS Mastery (Sessions 15-21)
