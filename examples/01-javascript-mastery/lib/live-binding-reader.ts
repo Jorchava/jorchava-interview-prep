@@ -10,7 +10,7 @@ import { counter } from './live-binding-exporter';
 import defaultValue from './live-binding-exporter';
 
 export function readCounterFromExporter(): number {
-  return counter;
+  return counter; // a live reference — reads the CURRENT value, not a snapshot
 }
 
 export function readDefaultFromExporter(): string {
