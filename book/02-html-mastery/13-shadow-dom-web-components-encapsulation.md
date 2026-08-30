@@ -77,12 +77,10 @@ Shadow tree (attached to div#host):
 
 Composed/rendered tree (what the browser paints):
   div#host
-    p → "Shadow content"            ← from shadow tree
-      [slot]
-        span → "Light DOM child"    ← distributed from light DOM
+    p → "Shadow content"            ← from shadow tree (light DOM child not rendered — no slot)
 ```
 
-The `<span>` is a child of `div#host` in the main document tree. The `<p>` is a child of the shadow root. The browser renders the shadow tree's `<p>` and slots the `<span>` inside it (if a `<slot>` is present in the shadow tree). The light DOM child stays in the main document tree — it is not moved.
+The `<span>` is a child of `div#host` in the main document tree. The `<p>` is a child of the shadow root. Because this shadow template has no `<slot>` element, the light DOM `<span>` has no rendering position in the shadow tree — it stays in the DOM but is not rendered. Section 2 (Slots and Light DOM Distribution) shows the complete picture: add a `<slot>` to the shadow template and the `<span>` distributes into it while remaining in the main document tree.
 
 ### Part 4 — Follow-Up Questions
 
