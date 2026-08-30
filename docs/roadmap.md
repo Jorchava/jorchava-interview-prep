@@ -56,7 +56,7 @@ test of whether the six-part format actually reads as senior.
 - [x] **Session 11** — Tables → ARIA basics in HTML context
 - [x] **Session 12** — Browser parsing → DOM construction
 - [x] **Session 13** — Shadow DOM → web components → encapsulation
-- [ ] **Session 14** — Events → event delegation → bubbling/capturing
+- [x] **Session 14** — Events → event delegation → bubbling/capturing
 
 ## Module 3 — CSS Mastery (Sessions 15-21)
 
