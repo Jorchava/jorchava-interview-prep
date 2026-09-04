@@ -60,13 +60,13 @@ test of whether the six-part format actually reads as senior.
 
 ## Module 3 — CSS Mastery (Sessions 15-21)
 
-- [ ] **Session 15** — Cascade → specificity → inheritance
-- [ ] **Session 16** — Box model → positioning schemes
-- [ ] **Session 17** — Flexbox → Grid → when to use which
-- [ ] **Session 18** — Animations → transforms → transitions → GPU/performance
-- [ ] **Session 19** — Container queries → modern CSS → logical properties
-- [ ] **Session 20** — CSS variables → theming at scale
-- [ ] **Session 21** — Architecture: BEM → SCSS → scalable CSS in large codebases
+- [x] **Session 15** — Cascade → specificity → inheritance
+- [x] **Session 16** — Box model → positioning schemes
+- [x] **Session 17** — Flexbox → Grid → when to use which
+- [x] **Session 18** — Animations → transforms → transitions → GPU/performance
+- [x] **Session 19** — Container queries → modern CSS → logical properties
+- [x] **Session 20** — CSS variables → theming at scale
+- [x] **Session 21** — Architecture: BEM → SCSS → scalable CSS in large codebases
 
 ## Module 4 — Browser (Sessions 22-26)
 
