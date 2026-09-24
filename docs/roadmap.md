@@ -73,8 +73,8 @@ test of whether the six-part format actually reads as senior.
 - [x] **Session 22** — DNS → TCP → TLS handshake → HTTPS
 - [x] **Session 23** — HTTP/1.1 → HTTP/2 → HTTP/3 → why they changed
 - [x] **Session 24** — Caching → cookies → storage (local/session/IndexedDB)
-- [ ] **Session 25** — Rendering pipeline: layout → paint → composite → GPU
-- [ ] **Session 26** — Reflow → repaint → critical rendering path
+- [x] **Session 25** — Rendering pipeline: layout → paint → composite → GPU
+- [x] **Session 26** — Reflow → repaint → critical rendering path
 
 ## Module 5 — Performance (Sessions 27-31)
 
