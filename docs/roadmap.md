@@ -79,7 +79,7 @@ test of whether the six-part format actually reads as senior.
 ## Module 5 — Performance (Sessions 27-31)
 
 - [x] **Session 27** — Core Web Vitals (LCP/INP/CLS) → measurement → improvement levers
-- [ ] **Session 28** — Lazy loading → images → fonts → resource hints
+- [x] **Session 28** — Lazy loading → images → fonts → resource hints
 - [ ] **Session 29** — Code splitting → bundles → tree shaking
 - [ ] **Session 30** — Compression → caching strategies (HTTP + app-level)
 - [ ] **Session 31** — Memory leaks → profiling → Chrome DevTools workflow
